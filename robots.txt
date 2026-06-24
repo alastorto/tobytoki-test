@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# AI & agent discovery
+# llms.txt: https://tobytoki.hk/llms.txt
+# OKF bundle: https://tobytoki.hk/okf/
+# ARD catalog: https://tobytoki.hk/.well-known/ai-catalog.json
+
+Sitemap: https://tobytoki.hk/sitemap.xml

@@ -1,0 +1,36 @@
+# tobytoki.hk
+
+> tobytoki.hk 是香港專業面部彩繪（Face Painting）服務供應商，提供生日派對、婚禮、商業活動及節日慶典的到場彩繪服務，使用安全無毒水性顏料，服務遍及港島、九龍及新界。
+
+tobytoki.hk 由專業面部彩繪師團隊營運，主要服務香港本地客戶。預約及查詢可透過 WhatsApp（852 2222 3333）、電郵 hello@tobytoki.hk 或網站聯絡表格。收費方案由 HK$1,500 起（2 小時基本方案）。
+
+結構化知識庫採用 [Open Knowledge Format (OKF) v0.1](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md)，位於 `/okf/` 目錄。AI 代理能力目錄採用 [Agentic Resource Discovery (ARD)](https://agenticresourcediscovery.org/)，位於 `/.well-known/ai-catalog.json`。
+
+## 主要頁面
+
+- [首頁](https://tobytoki.hk/): 面部彩繪服務總覽、精選作品及預約入口
+- [服務介紹](https://tobytoki.hk/services.html): 兒童派對、婚禮、商業活動等服務類別及收費方案
+- [作品集](https://tobytoki.hk/gallery.html): 兒童主題、節日主題及活動案例
+- [關於我們](https://tobytoki.hk/about.html): 品牌故事、專業承諾及服務數據
+- [聯絡我們](https://tobytoki.hk/contact.html): 預約查詢表格、聯絡方式及常見問題
+
+## 部落格
+
+- [如何為生日派對選擇面部彩繪主題](https://tobytoki.hk/blog/birthday-party-face-painting-tips.html): 主題選擇、年齡建議及預約貼士
+- [兒童面部彩繪安全指南](https://tobytoki.hk/blog/face-paint-safety-for-kids.html): 顏料安全、過敏注意事項及清洗方法
+
+## 結構化知識 (OKF)
+
+- [OKF 知識庫索引](https://tobytoki.hk/okf/index.md): Open Knowledge Format 知識包目錄
+- [面部彩繪服務](https://tobytoki.hk/okf/services/face-painting.md): 服務範圍、收費及預約流程
+- [品牌與聯絡](https://tobytoki.hk/okf/concepts/business.md): 公司資訊、服務地區及聯絡渠道
+
+## 機器可讀資源
+
+- [Sitemap](https://tobytoki.hk/sitemap.xml): 網站地圖
+- [robots.txt](https://tobytoki.hk/robots.txt): 爬蟲指引
+- [AI Catalog (ARD)](https://tobytoki.hk/.well-known/ai-catalog.json): Agentic Resource Discovery 能力目錄
+
+## Optional
+
+- [部落格首頁](https://tobytoki.hk/blog/): 文章列表
