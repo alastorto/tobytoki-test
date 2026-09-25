@@ -96,6 +96,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Horizontal strip carousel
+  document.querySelectorAll("[data-strip]").forEach((track) => {
+    const section = track.closest(".strip-section") || track.parentElement;
+    const prev = section.querySelector("[data-strip-prev]");
+    const next = section.querySelector("[data-strip-next]");
+    const step = () => Math.min(320, track.clientWidth * 0.8);
+
+    prev?.addEventListener("click", () => {
+      track.scrollBy({ left: -step(), behavior: "smooth" });
+    });
+    next?.addEventListener("click", () => {
+      track.scrollBy({ left: step(), behavior: "smooth" });
+    });
+  });
+
   const form = document.querySelector(".contact-form form");
   if (form) {
     form.addEventListener("submit", (e) => {

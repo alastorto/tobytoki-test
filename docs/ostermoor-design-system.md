@@ -93,11 +93,14 @@ If Toby later licenses the originals, swap the family names only — token struc
 
 ## 5. Elements Toby specifically wants
 
-- **走馬燈 / carousel**: hero image rotator + optional top announcement marquee.
-- **相片邊框**: notched double-line frames (Ostermoor “fancy box”).
-- Thin double horizontal rules as section separators.
-- Outline CTAs (`SHOP ALL` style) instead of filled gradient pills.
-- No emoji badges / purple-pink gradients (previous tobytoki look).
+- **走馬燈 / carousel**:
+  - Top announcement **marquee** (crimson bar)
+  - Full-viewport **hero image carousel**
+  - Horizontal **strip carousel** (`Complete your Look`) with scroll-snap + prev/next
+- **相片邊框**: Ostermoor `border--fancy-box` SVG border-image + scoop corner mask on media
+- Thin double horizontal rules as section separators
+- Outline CTAs (`SHOP ALL` style) instead of filled gradient pills
+- No emoji badges / purple-pink gradients (previous tobytoki look)
 
 ---
 
