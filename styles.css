@@ -1377,7 +1377,15 @@ textarea {
   }
 }
 
-/* —— Mobile nav —— */
+.nav-mobile-only {
+  display: none;
+}
+
+@media (max-width: 860px) {
+  .nav-mobile-only {
+    display: list-item;
+  }
+}
 @media (max-width: 860px) {
   .site-header .nav-shell {
     grid-template-columns: 1fr auto 1fr;

@@ -13,17 +13,20 @@ document.addEventListener("DOMContentLoaded", () => {
   let navLinks = document.querySelector(".nav-left .nav-links");
 
   if (toggle && navLinks) {
-    // Ensure mobile menu includes all key links
-    if (!navLinks.querySelector('a[href*="blog"]')) {
-      const blog = document.createElement("li");
-      blog.innerHTML = '<a href="blog/index.html">部落格</a>';
-      navLinks.appendChild(blog);
-    }
-    if (!navLinks.querySelector('a[href*="contact"]')) {
-      const contact = document.createElement("li");
-      contact.innerHTML = '<a href="contact.html">聯絡我們</a>';
-      navLinks.appendChild(contact);
-    }
+    const inBlog = window.location.pathname.includes("/blog/");
+    const prefix = inBlog ? "../" : "";
+    const ensureMobileLink = (href, label) => {
+      const file = href.split("/").pop();
+      if ([...navLinks.querySelectorAll("a")].some((a) => a.getAttribute("href")?.endsWith(file))) {
+        return;
+      }
+      const li = document.createElement("li");
+      li.className = "nav-mobile-only";
+      li.innerHTML = `<a href="${href}">${label}</a>`;
+      navLinks.appendChild(li);
+    };
+    ensureMobileLink(`${prefix}blog/index.html`, "部落格");
+    ensureMobileLink(`${prefix}contact.html`, "聯絡我們");
 
     toggle.addEventListener("click", () => {
       navLinks.classList.toggle("open");
