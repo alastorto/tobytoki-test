@@ -18,7 +18,7 @@
   <link rel="sitemap" type="application/xml" href="/sitemap.xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;500;600&family=Public+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script type="application/ld+json">
   {
@@ -39,21 +39,38 @@
   </script>
 </head>
 <body>
-  <header>
-    <nav>
-      <a href="index.html" class="logo">tobytoki.hk</a>
-      <button class="menu-toggle" aria-label="選單">
-        <span></span><span></span><span></span>
-      </button>
-      <ul class="nav-links">
-        <li><a href="index.html">首頁</a></li>
-        <li><a href="services.html">服務</a></li>
-        <li><a href="gallery.html">作品集</a></li>
-        <li><a href="about.html" class="active">關於我們</a></li>
-        <li><a href="blog/index.html">部落格</a></li>
-        <li><a href="contact.html">聯絡我們</a></li>
-      </ul>
-    </nav>
+  <div class="announce" aria-hidden="true">
+    <div class="announce-track">
+      <span>香港全港到場面部彩繪 · 安全無毒水性顏料</span>
+      <span>生日派對 · 婚禮 · 商業活動 · 節日慶典</span>
+      <span>WhatsApp 852 2222 3333 · hello@tobytoki.hk</span>
+      <span>香港全港到場面部彩繪 · 安全無毒水性顏料</span>
+      <span>生日派對 · 婚禮 · 商業活動 · 節日慶典</span>
+      <span>WhatsApp 852 2222 3333 · hello@tobytoki.hk</span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="nav-shell">
+      <div class="nav-left">
+        <ul class="nav-links">
+          <li><a href="index.html">首頁</a></li>
+<li><a href="services.html">服務</a></li>
+<li><a href="gallery.html">作品集</a></li>
+<li><a href="about.html" class="active">關於</a></li>
+        </ul>
+      </div>
+      <a href="index.html" class="logo-mark" aria-label="tobytoki.hk 首頁">
+        <span class="logo-crest">t</span>
+        <span class="logo-word">tobytoki</span>
+      </a>
+      <div class="nav-right">
+        <button class="menu-toggle" aria-label="選單"><span></span><span></span><span></span></button>
+        <a href="blog/index.html" class="nav-action">部落格</a>
+        <a href="contact.html" class="nav-action">預約</a>
+      </div>
+    </div>
+    <div class="header-rule" aria-hidden="true"></div>
   </header>
 
   <section class="page-banner">
@@ -67,111 +84,51 @@
     </div>
   </section>
 
-  <section>
+  <section class="section-block">
     <div class="container">
       <div class="about-grid">
-        <div class="about-image">🎨</div>
-        <div class="about-text">
-          <span class="section-tag">我們的故事</span>
-          <h2>tobytoki.hk</h2>
-          <p>tobytoki.hk 成立於香港，由一群熱愛藝術與分享的專業面部彩繪師組成。我們相信，一面簡單的面部彩繪就能為孩子帶來無限歡樂，也能為任何活動增添難忘的色彩。</p>
-          <p>多年來，我們服務過數百場生日派對、婚禮、商業活動及社區慶典，累積了豐富的現場經驗與創意設計。每一位彩繪師都經過專業培訓，使用國際認證的安全無毒水性顏料，確保每位參加者都能安心享受彩繪樂趣。</p>
-          <p>我們的使命很簡單：用繽紛的色彩，為每個笑容添上更多快樂。</p>
+        <div class="frame frame-notch">
+          <div class="frame-media"><div class="swatch swatch-b"></div></div>
+        </div>
+        <div>
+          <h2 class="headline-mix headline-md">我們的故事 · <span class="accent">tobytoki</span></h2>
+          <p style="margin-top:1rem;color:var(--color-muted);line-height:1.7">tobytoki.hk 成立於香港，由一群熱愛藝術與分享的專業面部彩繪師組成。我們相信，一面簡單的面部彩繪就能為孩子帶來無限歡樂，也能為任何活動增添難忘的色彩。</p>
+          <p style="margin-top:.85rem;color:var(--color-muted);line-height:1.7">多年來，我們服務過數百場生日派對、婚禮、商業活動及社區慶典。每一位彩繪師都經過專業培訓，使用國際認證的安全無毒水性顏料。</p>
           <div class="stats">
-            <div class="stat">
-              <div class="number">500+</div>
-              <div class="label">完成活動</div>
-            </div>
-            <div class="stat">
-              <div class="number">10,000+</div>
-              <div class="label">快樂笑容</div>
-            </div>
-            <div class="stat">
-              <div class="number">5+</div>
-              <div class="label">年專業經驗</div>
-            </div>
+            <div class="stat-item"><div class="num">500+</div><span class="label">場活動</span></div>
+            <div class="stat-item"><div class="num">10k+</div><span class="label">服務人次</span></div>
+            <div class="stat-item"><div class="num">2021</div><span class="label">成立年份</span></div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section style="background: #fafafa;">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">我們的承諾</span>
-        <h2>為什麼選擇 tobytoki.hk</h2>
-      </div>
-      <div class="card-grid">
-        <div class="card">
-          <div class="card-icon" style="background: #ffe0ef;">✨</div>
-          <h3>專業技術</h3>
-          <p>每位彩繪師均具備多年現場經驗，能快速完成精緻作品，應付大型活動的人流需求。</p>
+  <section class="section-block" style="padding-top:0">
+    <div class="container section-center">
+      <h2 class="headline-mix headline-md">我們重視 · <span class="accent">三件事</span></h2>
+      <div class="values-grid" style="margin-top:2rem;text-align:left">
+        <div class="frame frame-notch value-card" style="padding:1.5rem">
+          <h3>安心</h3>
+          <p>只使用國際認證安全無毒水性顏料，溫和易清洗，適合小朋友肌膚。</p>
         </div>
-        <div class="card">
-          <div class="card-icon" style="background: #e8e0ff;">🛡️</div>
-          <h3>安全無毒</h3>
-          <p>只使用通過國際認證的水性面部彩繪顏料，溫和配方，適合兒童及敏感肌膚，易於清洗。</p>
+        <div class="frame frame-notch value-card" style="padding:1.5rem">
+          <h3>質感</h3>
+          <p>講求構圖層次與現場節奏，讓每一張臉都像一件小藝術品。</p>
         </div>
-        <div class="card">
-          <div class="card-icon" style="background: #d4f5f4;">🎯</div>
-          <h3>客製設計</h3>
-          <p>根據活動主題、品牌色調或個人喜好，量身設計獨一無二的彩繪圖案。</p>
-        </div>
-        <div class="card">
-          <div class="card-icon" style="background: #fff3d4;">⏰</div>
-          <h3>準時可靠</h3>
-          <p>嚴守約定時間到達現場，自備全套工具及材料，讓您無後顧之憂。</p>
-        </div>
-        <div class="card">
-          <div class="card-icon" style="background: #e0f0ff;">😊</div>
-          <h3>友善互動</h3>
-          <p>彩繪師善於與小朋友互動，營造輕鬆愉快的氛圍，讓每位參加者都開心滿足。</p>
-        </div>
-        <div class="card">
-          <div class="card-icon" style="background: #f0e0ff;">💰</div>
-          <h3>透明收費</h3>
-          <p>清晰明確的收費方案，無隱藏費用。大型活動可提供客製化報價。</p>
+        <div class="frame frame-notch value-card" style="padding:1.5rem">
+          <h3>貼心</h3>
+          <p>溝通清晰、準時到場、自備工具，讓主辦單位少一份煩惱。</p>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="cta">
-    <h2>想更了解我們？</h2>
-    <p>歡迎聯絡 tobytoki.hk，我們樂意為您解答任何問題</p>
-    <a href="contact.html" class="btn btn-primary">聯絡我們</a>
+  <div class="cta-band">
+    <h2>想認識我們？一起為活動 <span class="accent">添色</span></h2>
+    <p>歡迎查詢檔期與報價。</p>
+    <a href="contact.html" class="btn">聯絡我們</a>
   </div>
 
-  <footer>
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <span class="logo">tobytoki.hk</span>
-        <p>香港專業面部彩繪服務，為生日派對、婚禮、商業活動及節日慶典帶來繽紛色彩與歡樂回憶。</p>
-      </div>
-      <div class="footer-links">
-        <h4>快速連結</h4>
-        <ul>
-          <li><a href="index.html">首頁</a></li>
-          <li><a href="services.html">服務</a></li>
-          <li><a href="gallery.html">作品集</a></li>
-          <li><a href="about.html">關於我們</a></li>
-        </ul>
-      </div>
-      <div class="footer-links">
-        <h4>聯絡方式</h4>
-        <ul>
-          <li><a href="mailto:hello@tobytoki.hk">hello@tobytoki.hk</a></li>
-          <li><a href="tel:+85222223333">+852 2222 3333</a></li>
-          <li><a href="contact.html">預約查詢</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 tobytoki.hk. 版權所有。</p>
-    </div>
-  </footer>
 
-  <script src="script.js"></script>
-</body>
-</html>
+  <footer
