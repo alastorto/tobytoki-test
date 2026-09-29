@@ -1,0 +1,56 @@
+---
+import type { Locale } from '../data/site';
+import { faqCategories, faqItems, type FaqCategory } from '../data/faq';
+
+interface Props {
+  locale: Locale;
+  ids?: string[];
+  grouped?: boolean;
+  categories?: FaqCategory[];
+}
+
+const { locale, ids, grouped = false, categories } = Astro.props;
+
+const items = ids
+  ? faqItems.filter((item) => ids.includes(item.id))
+  : categories
+    ? faqItems.filter((item) => categories.includes(item.category))
+    : faqItems;
+
+const groups = grouped
+  ? faqCategories
+      .filter((cat) => !categories || categories.includes(cat.id))
+      .map((cat) => ({
+        ...cat,
+        items: items.filter((item) => item.category === cat.id),
+      }))
+      .filter((g) => g.items.length)
+  : null;
+---
+
+{
+  groups ? (
+    groups.map((group) => (
+      <section class="faq-group">
+        <h2>{group.label[locale]}</h2>
+        <div class="faq-list">
+          {group.items.map((item) => (
+            <details class="faq-item">
+              <summary>{item.question[locale]}</summary>
+              <p>{item.answer[locale]}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+    ))
+  ) : (
+    <div class="faq-list">
+      {items.map((item) => (
+        <details class="faq-item">
+          <summary>{item.question[locale]}</summary>
+          <p>{item.answer[locale]}</p>
+        </details>
+      ))}
+    </div>
+  )
+}

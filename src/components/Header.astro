@@ -1,0 +1,127 @@
+---
+import type { Locale } from '../data/site';
+import { t } from '../i18n/ui';
+import { pageHref } from '../i18n/utils';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+
+interface Props {
+  locale: Locale;
+  current?: string;
+}
+
+const { locale, current = '' } = Astro.props;
+const copy = t(locale);
+const home = pageHref(locale, 'home');
+---
+
+<header class="site-header">
+  <div class="container nav-shell">
+    <div class="nav-left">
+      <ul class="nav-list">
+        <li>
+          <a href={pageHref(locale, 'work')} aria-current={current === 'work' ? 'page' : undefined}
+            >{copy.nav.work}</a
+          >
+        </li>
+        <li>
+          <details class="services-details">
+            <summary>{copy.nav.services}</summary>
+            <div class="services-panel">
+              <a
+                href={pageHref(locale, 'face-painting')}
+                aria-current={current === 'face-painting' ? 'page' : undefined}
+                >{copy.nav.facePainting}</a
+              >
+              <a
+                href={pageHref(locale, 'balloon-twisting')}
+                aria-current={current === 'balloon-twisting' ? 'page' : undefined}
+                >{copy.nav.balloonArt}</a
+              >
+              <a
+                href={pageHref(locale, 'photography')}
+                aria-current={current === 'photography' ? 'page' : undefined}
+                >{copy.nav.photography}</a
+              >
+            </div>
+          </details>
+        </li>
+        <li>
+          <a href={pageHref(locale, 'about')} aria-current={current === 'about' ? 'page' : undefined}
+            >{copy.nav.about}</a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <a class="brand" href={home} aria-label="Tobytoki">
+      <span class="brand-word">Tobytoki</span>
+    </a>
+
+    <div class="nav-right">
+      <ul class="nav-list desktop-only">
+        <li>
+          <a
+            href={pageHref(locale, 'journal')}
+            aria-current={current === 'journal' ? 'page' : undefined}>{copy.nav.journal}</a
+          >
+        </li>
+        <li>
+          <a
+            href={pageHref(locale, 'contact')}
+            aria-current={current === 'contact' ? 'page' : undefined}>{copy.nav.contact}</a
+          >
+        </li>
+      </ul>
+      <div class="desktop-only">
+        <LanguageSwitcher locale={locale} />
+      </div>
+      <button
+        class="nav-toggle"
+        type="button"
+        data-nav-toggle
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+      >
+        {copy.nav.openMenu}
+      </button>
+    </div>
+  </div>
+
+  <div class="container mobile-panel" id="mobile-nav" data-mobile-panel hidden>
+    <ul class="nav-list">
+      <li>
+        <a href={pageHref(locale, 'work')}>{copy.nav.work}</a>
+      </li>
+      <li>
+        <details class="services-details" open>
+          <summary>{copy.nav.services}</summary>
+          <div class="services-panel">
+            <a href={pageHref(locale, 'face-painting')}>{copy.nav.facePainting}</a>
+            <a href={pageHref(locale, 'balloon-twisting')}>{copy.nav.balloonArt}</a>
+            <a href={pageHref(locale, 'photography')}>{copy.nav.photography}</a>
+          </div>
+        </details>
+      </li>
+      <li><a href={pageHref(locale, 'about')}>{copy.nav.about}</a></li>
+      <li><a href={pageHref(locale, 'journal')}>{copy.nav.journal}</a></li>
+      <li><a href={pageHref(locale, 'faq')}>{copy.nav.faq}</a></li>
+      <li><a href={pageHref(locale, 'contact')}>{copy.nav.contact}</a></li>
+    </ul>
+    <div class="mt-1">
+      <LanguageSwitcher locale={locale} />
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector('[data-nav-toggle]');
+  const panel = document.querySelector('[data-mobile-panel]');
+  if (toggle instanceof HTMLButtonElement && panel instanceof HTMLElement) {
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', open ? 'false' : 'true');
+      panel.hidden = open;
+      panel.classList.toggle('is-open', !open);
+    });
+  }
+</script>

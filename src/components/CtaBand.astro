@@ -1,0 +1,33 @@
+---
+import { siteConfig, type Locale } from '../data/site';
+import { t } from '../i18n/ui';
+import { pageHref } from '../i18n/utils';
+
+interface Props {
+  locale: Locale;
+  title?: string;
+  body?: string;
+}
+
+const { locale, title, body } = Astro.props;
+const copy = t(locale);
+const whatsapp = siteConfig.whatsapp
+  ? `https://wa.me/${siteConfig.whatsapp.replace(/\D/g, '')}`
+  : '';
+---
+
+<section class="cta-band">
+  <h2>{title ?? copy.home.finalTitle}</h2>
+  <p>{body ?? copy.home.finalBody}</p>
+  {
+    whatsapp ? (
+      <a class="btn" href={whatsapp} target="_blank" rel="noopener noreferrer">
+        {copy.common.whatsappCta}
+      </a>
+    ) : (
+      <a class="btn" href={pageHref(locale, 'contact')}>
+        {copy.common.contactCta}
+      </a>
+    )
+  }
+</section>

@@ -1,0 +1,268 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import ImagePlaceholder from '../components/ImagePlaceholder.astro';
+import PortfolioGrid from '../components/PortfolioGrid.astro';
+import JournalPreview from '../components/JournalPreview.astro';
+import FaqList from '../components/FaqList.astro';
+import CtaBand from '../components/CtaBand.astro';
+import type { Locale } from '../data/site';
+import type { FaqCategory } from '../data/faq';
+import { workItems, type WorkCategory } from '../data/work';
+import { t } from '../i18n/ui';
+import { absoluteUrl, pageHref } from '../i18n/utils';
+import { getJournalPosts } from '../lib/journal';
+
+interface Props {
+  locale: Locale;
+  service: 'face-painting' | 'balloon-twisting' | 'photography';
+}
+
+const { locale, service } = Astro.props;
+const copy = t(locale);
+
+const config = {
+  'face-painting': {
+    path: 'face-painting',
+    current: 'face-painting',
+    metaTitle: copy.face.metaTitle,
+    metaDescription: copy.face.metaDescription,
+    h1: copy.face.h1,
+    sub: copy.face.h1En,
+    intro: copy.face.intro,
+    workCategory: 'face-painting' as WorkCategory,
+    faqCategory: 'face-painting' as FaqCategory,
+    journalCategory: 'face-painting',
+    hero: 'FACE PAINTING — HERO',
+    gallery: [
+      'FACE PAINTING — CLOSE UP',
+      'FACE PAINTING — CHILD PORTRAIT',
+      'FACE PAINTING — EVENT',
+      'FACE PAINTING — DETAIL',
+      'FACE PAINTING — WORKING PHOTO',
+    ],
+    showMaterials: true,
+    showStyles: false,
+  },
+  'balloon-twisting': {
+    path: 'balloon-twisting',
+    current: 'balloon-twisting',
+    metaTitle: copy.balloon.metaTitle,
+    metaDescription: copy.balloon.metaDescription,
+    h1: copy.balloon.h1,
+    sub: copy.balloon.h1En,
+    intro: copy.balloon.intro,
+    workCategory: 'balloon-art' as WorkCategory,
+    faqCategory: 'balloon-art' as FaqCategory,
+    journalCategory: 'balloon-art',
+    hero: 'BALLOON ART — HERO',
+    gallery: [
+      'BALLOON ART — CHARACTER',
+      'BALLOON ART — EVENT',
+      'BALLOON ART — DETAIL',
+      'BALLOON ART — WORKING PHOTO',
+      'BALLOON ART — TABLE DISPLAY',
+    ],
+    showMaterials: false,
+    showStyles: true,
+  },
+  photography: {
+    path: 'photography',
+    current: 'photography',
+    metaTitle: copy.photo.metaTitle,
+    metaDescription: copy.photo.metaDescription,
+    h1: copy.photo.h1,
+    sub: copy.photo.h1En,
+    intro: copy.photo.intro,
+    workCategory: 'photography' as WorkCategory,
+    faqCategory: 'photography' as FaqCategory,
+    journalCategory: 'photography',
+    hero: 'PHOTOGRAPHY — HERO',
+    gallery: ['PARTY PHOTOGRAPHY', 'FAMILY / EVENT PHOTO', 'PHOTOGRAPHY — DETAIL', 'PHOTOGRAPHY — CANDID'],
+    showMaterials: false,
+    showStyles: false,
+  },
+}[service];
+
+const relatedWork = workItems.filter((item) => item.category === config.workCategory);
+const posts = (await getJournalPosts(locale))
+  .filter((post) => post.data.category === config.journalCategory || post.data.category === 'general')
+  .slice(0, 2);
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Tobytoki',
+      item: absoluteUrl(pageHref(locale, 'home')),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: config.h1,
+      item: absoluteUrl(pageHref(locale, service)),
+    },
+  ],
+};
+---
+
+<BaseLayout
+  locale={locale}
+  title={config.metaTitle}
+  description={config.metaDescription}
+  path={config.path}
+  current={config.current}
+  schemas={[breadcrumbSchema]}
+>
+  <section class="page-hero container">
+    <Breadcrumb locale={locale} items={[{ label: config.h1 }]} />
+    <h1>{config.h1}</h1>
+    <p class="sub">{config.sub}</p>
+    <p class="lede mt-1">{config.intro}</p>
+  </section>
+
+  <section class="section-tight">
+    <div class="container">
+      <ImagePlaceholder label={config.hero} aspect="hero" priority />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="eyebrow">{copy.sections.selectedWork}</h2>
+      <div class="portfolio-grid mt-1">
+        {
+          config.gallery.map((label, i) => (
+            <article class:list={[i === 0 ? 'item-large' : 'item-medium']}>
+              <ImagePlaceholder
+                label={label}
+                aspect={i % 2 === 0 ? 'portrait' : 'square'}
+              />
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {
+    service === 'photography' && (
+      <section class="section-tight">
+        <div class="container">
+          <h2 class="eyebrow">{copy.sections.categories}</h2>
+          <div class="concept-row">
+            <div class="concept">
+              <h3>Kids Party</h3>
+              <p>{locale === 'zh' ? '兒童派對' : 'Kids parties'}</p>
+            </div>
+            <div class="concept">
+              <h3>Event</h3>
+              <p>{locale === 'zh' ? '活動攝影' : 'Event photography'}</p>
+            </div>
+            <div class="concept">
+              <h3>Family</h3>
+              <p>{locale === 'zh' ? '家庭相' : 'Family photos'}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    config.showStyles && (
+      <section class="section-tight">
+        <div class="container split">
+          <div class="split-copy">
+            <h2 class="headline-mix">{copy.sections.styles}</h2>
+            <p>
+              {locale === 'zh'
+                ? '預留方向：角色造型、花束、簡單互動款。正式款式稍後整理。'
+                : 'Placeholder directions: characters, bouquets, simple interactive forms. Full list later.'}
+            </p>
+          </div>
+          <ImagePlaceholder label="BALLOON ART — STYLE BOARD" aspect="landscape" />
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section">
+    <div class="container split">
+      <div class="split-copy">
+        <h2 class="headline-mix">{copy.sections.suitableEvents}</h2>
+        <p>
+          {locale === 'zh'
+            ? '生日派對、家庭聚會、學校／社區活動、品牌活動等方向預留。正式說明稍後確認。'
+            : 'Birthday parties, family gatherings, school/community and brand events — details later.'}
+        </p>
+        <h2 class="headline-mix mt-2">{config.showMaterials ? copy.sections.process : copy.sections.howItWorks}</h2>
+        <p>
+          {locale === 'zh'
+            ? '查詢 → 確認檔期與人數 → 活動當日到場。細節流程稍後補充。'
+            : 'Enquire → confirm date & guests → on-site delivery. Detailed process later.'}
+        </p>
+        {
+          config.showMaterials && (
+            <>
+              <h2 class="headline-mix mt-2">{copy.sections.materials}</h2>
+              <p>
+                {locale === 'zh'
+                  ? '物料與安全說明會在確認後正式寫入。此處僅預留版面，不作未核實宣稱。'
+                  : 'Materials and safety notes will be written after confirmation. No unverified claims here.'}
+              </p>
+            </>
+          )
+        }
+      </div>
+      <ImagePlaceholder
+        label={service === 'face-painting' ? 'FACE PAINTING — WORKING PHOTO' : service === 'balloon-twisting' ? 'BALLOON ART — WORKING PHOTO' : 'PHOTOGRAPHY — WORKING'}
+        aspect="portrait"
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="headline-mix center" style="font-size: clamp(1.4rem, 3vw, 2rem);">
+        {copy.sections.selectedWork}
+      </h2>
+      <div class="mt-2">
+        <PortfolioGrid locale={locale} items={relatedWork} />
+      </div>
+      <p class="center mt-2">
+        <a class="link-caps" href={pageHref(locale, 'work')}>{copy.common.viewAll}</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="eyebrow">{copy.nav.faq}</h2>
+      <div class="mt-1">
+        <FaqList locale={locale} categories={[config.faqCategory, 'booking']} />
+      </div>
+      <p class="mt-2">
+        <a class="link-caps" href={pageHref(locale, 'faq')}>{copy.home.viewFaq}</a>
+      </p>
+    </div>
+  </section>
+
+  {
+    posts.length > 0 && (
+      <section class="section">
+        <div class="container">
+          <h2 class="eyebrow">{copy.sections.relatedJournal}</h2>
+          <div class="mt-1">
+            <JournalPreview locale={locale} posts={posts} />
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <CtaBand locale={locale} />
+</BaseLayout>

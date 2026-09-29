@@ -1,0 +1,196 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ImagePlaceholder from '../components/ImagePlaceholder.astro';
+import PortfolioGrid from '../components/PortfolioGrid.astro';
+import JournalPreview from '../components/JournalPreview.astro';
+import FaqList from '../components/FaqList.astro';
+import CtaBand from '../components/CtaBand.astro';
+import type { Locale } from '../data/site';
+import { t } from '../i18n/ui';
+import { pageHref } from '../i18n/utils';
+import { getJournalPosts } from '../lib/journal';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = t(locale);
+const posts = (await getJournalPosts(locale)).slice(0, 3);
+const faqPreviewIds = ['fp-age', 'fp-duration', 'ba-vs-fp', 'bk-lead', 'bk-info', 'ba-styles'];
+---
+
+<BaseLayout
+  locale={locale}
+  title={copy.home.metaTitle}
+  description={copy.home.metaDescription}
+  path=""
+  current="home"
+>
+  <section class="home-hero container">
+    <div class="brand-lockup">
+      <h1>Tobytoki</h1>
+      <p class="descriptor">{copy.home.heroDescriptor}</p>
+    </div>
+    <ImagePlaceholder label={copy.home.heroImageLabel} aspect="hero" priority />
+  </section>
+
+  <section class="section">
+    <div class="container split">
+      <ImagePlaceholder label={copy.home.introImageLabel} aspect="portrait" />
+      <div class="split-copy">
+        <p class="eyebrow">{copy.home.introEyebrow}</p>
+        <h2 class="headline-mix">
+          {copy.home.introTitle}
+        </h2>
+        <p>{copy.home.introBody}</p>
+        <a class="link-caps" href={pageHref(locale, 'about')}>{copy.home.aboutCta}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="face-heading">
+    <div class="container split">
+      <div class="media-stack trio">
+        <div class="span-2">
+          <ImagePlaceholder label="FACE PAINTING — MAIN IMAGE" aspect="portrait" />
+        </div>
+        <ImagePlaceholder label="FACE PAINTING — DETAIL" aspect="square" />
+        <ImagePlaceholder label="FACE PAINTING — WORKING PHOTO" aspect="landscape" />
+      </div>
+      <div class="split-copy">
+        <p class="index-label">01 / Face Painting</p>
+        <h2 id="face-heading" class="headline-mix">
+          {copy.home.faceTitle}
+          <span class="accent"> · {copy.home.faceVisual}</span>
+        </h2>
+        <p>
+          {copy.home.faceBody}
+          {' '}
+          <span lang={locale === 'zh' ? 'en' : 'zh-Hant'}>
+            {locale === 'zh' ? 'Face Painting' : '面部彩繪'}
+          </span>
+        </p>
+        <a class="link-caps" href={pageHref(locale, 'face-painting')}>{copy.home.faceCta}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="balloon-heading">
+    <div class="container split reverse">
+      <div class="media-stack duo">
+        <ImagePlaceholder label="BALLOON ART — MAIN IMAGE" aspect="tall" />
+        <div class="stack-sm">
+          <ImagePlaceholder label="BALLOON ART — DETAIL" aspect="square" />
+          <ImagePlaceholder label="BALLOON ART — WORKING PHOTO" aspect="landscape" />
+        </div>
+      </div>
+      <div class="split-copy">
+        <p class="index-label">02 / Balloon Art</p>
+        <h2 id="balloon-heading" class="headline-mix">
+          {copy.home.balloonTitle}
+        </h2>
+        <p>
+          {copy.home.balloonBody}
+          {' '}
+          <span lang={locale === 'zh' ? 'en' : 'zh-Hant'}>
+            {locale === 'zh' ? 'Balloon Twisting · 扭氣球' : '扭氣球'}
+          </span>
+        </p>
+        <a class="link-caps" href={pageHref(locale, 'balloon-twisting')}>{copy.home.balloonCta}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight" aria-labelledby="photo-heading">
+    <div class="container split photo-compact">
+      <div class="split-copy">
+        <p class="index-label">03 / Photography</p>
+        <h2 id="photo-heading" class="headline-mix">{copy.home.photoTitle}</h2>
+        <p>{copy.home.photoBody}</p>
+        <a class="link-caps" href={pageHref(locale, 'photography')}>{copy.home.photoCta}</a>
+      </div>
+      <div class="media-stack duo">
+        <ImagePlaceholder label="PARTY PHOTOGRAPHY" aspect="landscape" />
+        <ImagePlaceholder label="FAMILY / EVENT PHOTO" aspect="square" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <p class="eyebrow center">Artist</p>
+      <h2 class="headline-mix center headline-lg" style="font-size: clamp(1.6rem, 3.5vw, 2.6rem);">
+        {copy.home.artistTitle}
+      </h2>
+      <p class="lede center" style="margin: 1rem auto 0;">{copy.home.artistLead}</p>
+      <div class="concept-row">
+        <div class="concept">
+          <h3>Art & Design</h3>
+          <p>{locale === 'zh' ? '藝術與設計背景' : 'Art & design foundation'}</p>
+        </div>
+        <div class="concept">
+          <h3>Children</h3>
+          <p>{locale === 'zh' ? '長期與小朋友相處' : 'Years with children'}</p>
+        </div>
+        <div class="concept">
+          <h3>Colour</h3>
+          <p>{locale === 'zh' ? '作品本身帶來繽紛' : 'Colour lives in the work'}</p>
+        </div>
+        <div class="concept">
+          <h3>Craft</h3>
+          <p>{locale === 'zh' ? '手作與現場節奏' : 'Handmade, on-site craft'}</p>
+        </div>
+        <div class="concept">
+          <h3>Personality</h3>
+          <p>{locale === 'zh' ? '創作者的個性呈現' : 'A personal creative voice'}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="center">
+        <h2 class="headline-mix" style="font-size: clamp(1.5rem, 3vw, 2.3rem);">
+          {copy.home.selectedWork}
+        </h2>
+      </div>
+      <div class="mt-2">
+        <PortfolioGrid locale={locale} limit={10} />
+      </div>
+      <p class="center mt-2">
+        <a class="link-caps" href={pageHref(locale, 'work')}>{copy.home.viewWork}</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="center">
+        <h2 class="headline-mix" style="font-size: clamp(1.5rem, 3vw, 2.3rem);">{copy.home.journalTitle}</h2>
+        <p class="lede" style="margin: 0.75rem auto 0;">{copy.home.journalLead}</p>
+      </div>
+      <div class="mt-2">
+        <JournalPreview locale={locale} posts={posts} />
+      </div>
+      <p class="center mt-2">
+        <a class="link-caps" href={pageHref(locale, 'journal')}>{copy.home.viewJournal}</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="center" style="margin-bottom: 1.5rem;">
+        <h2 class="headline-mix" style="font-size: clamp(1.5rem, 3vw, 2.3rem);">{copy.home.faqTitle}</h2>
+      </div>
+      <FaqList locale={locale} ids={faqPreviewIds} />
+      <p class="center mt-2">
+        <a class="link-caps" href={pageHref(locale, 'faq')}>{copy.home.viewFaq}</a>
+      </p>
+    </div>
+  </section>
+
+  <CtaBand locale={locale} />
+</BaseLayout>

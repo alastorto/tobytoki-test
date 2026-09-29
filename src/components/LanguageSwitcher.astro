@@ -1,0 +1,21 @@
+---
+import type { Locale } from '../data/site';
+import { t } from '../i18n/ui';
+import { switchLocalePath } from '../i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = t(locale);
+const pathname = Astro.url.pathname;
+const zhHref = switchLocalePath(locale, 'zh', pathname);
+const enHref = switchLocalePath(locale, 'en', pathname);
+---
+
+<nav class="lang-switch" aria-label="Language">
+  <a href={zhHref} aria-current={locale === 'zh' ? 'true' : undefined}>{copy.common.langZh}</a>
+  <span aria-hidden="true">/</span>
+  <a href={enHref} aria-current={locale === 'en' ? 'true' : undefined}>{copy.common.langEn}</a>
+</nav>

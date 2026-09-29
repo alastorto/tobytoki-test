@@ -1,0 +1,43 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../data/site';
+import { t } from '../i18n/ui';
+import { localizePath } from '../i18n/utils';
+import ImagePlaceholder from './ImagePlaceholder.astro';
+
+interface Props {
+  locale: Locale;
+  posts: CollectionEntry<'journal'>[];
+}
+
+const { locale, posts } = Astro.props;
+const copy = t(locale);
+---
+
+<div class="journal-grid">
+  {
+    posts.map((post) => (
+      <article class="journal-card">
+        <ImagePlaceholder
+          label={post.data.heroLabel ?? `JOURNAL — ${post.data.title}`}
+          aspect="landscape"
+        />
+        <p class="journal-meta">
+          {post.data.category} ·{' '}
+          {post.data.publishDate.toLocaleDateString(locale === 'zh' ? 'zh-HK' : 'en-HK', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          })}
+        </p>
+        <h3>
+          <a href={localizePath(locale, `journal/${post.data.slug}`)}>{post.data.title}</a>
+        </h3>
+        <p>{post.data.description}</p>
+        <a class="link-caps" href={localizePath(locale, `journal/${post.data.slug}`)}>
+          {copy.common.readMore}
+        </a>
+      </article>
+    ))
+  }
+</div>

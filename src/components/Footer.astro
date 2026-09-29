@@ -1,0 +1,44 @@
+---
+import type { Locale } from '../data/site';
+import { t } from '../i18n/ui';
+import { pageHref } from '../i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = t(locale);
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <h2>Tobytoki</h2>
+      <p>{copy.footer.tagline}</p>
+    </div>
+    <div>
+      <h2>{copy.footer.services}</h2>
+      <ul>
+        <li><a href={pageHref(locale, 'face-painting')}>{copy.nav.facePainting}</a></li>
+        <li><a href={pageHref(locale, 'balloon-twisting')}>{copy.nav.balloonArt}</a></li>
+        <li><a href={pageHref(locale, 'photography')}>{copy.nav.photography}</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>{copy.footer.explore}</h2>
+      <ul>
+        <li><a href={pageHref(locale, 'work')}>{copy.nav.work}</a></li>
+        <li><a href={pageHref(locale, 'about')}>{copy.nav.about}</a></li>
+        <li><a href={pageHref(locale, 'journal')}>{copy.nav.journal}</a></li>
+        <li><a href={pageHref(locale, 'faq')}>{copy.nav.faq}</a></li>
+        <li><a href={pageHref(locale, 'contact')}>{copy.nav.contact}</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-wordmark"><span>Tobytoki</span></div>
+  <div class="footer-bottom">
+    <p>© {year} {copy.footer.rights}</p>
+  </div>
+</footer>

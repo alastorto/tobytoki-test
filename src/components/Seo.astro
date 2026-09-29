@@ -1,0 +1,58 @@
+---
+import {
+  localeToHreflang,
+  localeToHtmlLang,
+  siteConfig,
+  type Locale,
+} from '../data/site';
+import { absoluteUrl, localizePath } from '../i18n/utils';
+
+interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+  path?: string;
+  ogType?: 'website' | 'article';
+  noindex?: boolean;
+}
+
+const {
+  locale,
+  title,
+  description,
+  path = '',
+  ogType = 'website',
+  noindex = false,
+} = Astro.props;
+
+const canonicalPath = localizePath(locale, path);
+const canonical = absoluteUrl(canonicalPath);
+const zhUrl = absoluteUrl(localizePath('zh', path));
+const enUrl = absoluteUrl(localizePath('en', path));
+const htmlLang = localeToHtmlLang[locale];
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{title}</title>
+<meta name="description" content={description} />
+{noindex ? <meta name="robots" content="noindex, follow" /> : <meta name="robots" content="index, follow" />}
+<link rel="canonical" href={canonical} />
+<link rel="alternate" hreflang={localeToHreflang.zh} href={zhUrl} />
+<link rel="alternate" hreflang={localeToHreflang.en} href={enUrl} />
+<link rel="alternate" hreflang="x-default" href={zhUrl} />
+<meta property="og:type" content={ogType} />
+<meta property="og:site_name" content={siteConfig.name} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:locale" content={locale === 'zh' ? 'zh_HK' : 'en_HK'} />
+<meta property="og:locale:alternate" content={locale === 'zh' ? 'en_HK' : 'zh_HK'} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Context" />
+<meta name="generator" content={Astro.generator} />
+<!-- html lang applied on <html> via layout; expose for consumers -->
+<meta name="content-language" content={htmlLang} />

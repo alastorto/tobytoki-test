@@ -1,0 +1,30 @@
+---
+import type { Locale } from '../data/site';
+import { pageHref } from '../i18n/utils';
+
+interface Crumb {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  locale: Locale;
+  items: Crumb[];
+}
+
+const { locale, items } = Astro.props;
+const homeHref = pageHref(locale, 'home');
+---
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <ol>
+    <li><a href={homeHref}>Tobytoki</a></li>
+    {
+      items.map((item) => (
+        <li>
+          {item.href ? <a href={item.href}>{item.label}</a> : <span aria-current="page">{item.label}</span>}
+        </li>
+      ))
+    }
+  </ol>
+</nav>

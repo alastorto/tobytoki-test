@@ -1,0 +1,113 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
+import JournalPreview from '../../components/JournalPreview.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { getJournalPosts } from '../../lib/journal';
+import { t } from '../../i18n/ui';
+import { localizePath, pageHref, absoluteUrl } from '../../i18n/utils';
+
+export async function getStaticPaths() {
+  const posts = await getJournalPosts('zh');
+  return posts.map((post) => ({
+    params: { slug: post.data.slug },
+    props: { post },
+  }));
+}
+
+const locale = 'zh' as const;
+const copy = t(locale);
+const { post } = Astro.props;
+const { Content } = await render(post);
+const all = await getJournalPosts(locale);
+const index = all.findIndex((p) => p.data.slug === post.data.slug);
+const prev = index < all.length - 1 ? all[index + 1] : undefined;
+const next = index > 0 ? all[index - 1] : undefined;
+const related = all.filter((p) => p.data.slug !== post.data.slug && p.data.category === post.data.category).slice(0, 2);
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.publishDate.toISOString(),
+  dateModified: (post.data.updatedDate ?? post.data.publishDate).toISOString(),
+  inLanguage: 'zh-Hant-HK',
+  author: { '@type': 'Person', name: 'Toby' },
+  mainEntityOfPage: absoluteUrl(localizePath(locale, `journal/${post.data.slug}`)),
+};
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${post.data.title} | Tobytoki`}
+  description={post.data.description}
+  path={`journal/${post.data.slug}`}
+  current="journal"
+  ogType="article"
+  schemas={[articleSchema]}
+>
+  <article class="section-tight container">
+    <Breadcrumb
+      locale={locale}
+      items={[
+        { label: copy.journal.h1, href: pageHref(locale, 'journal') },
+        { label: post.data.title },
+      ]}
+    />
+    <div class="article">
+      <p class="journal-meta">
+        {post.data.category} ·{' '}
+        {post.data.publishDate.toLocaleDateString('zh-HK', { year: 'numeric', month: 'long', day: 'numeric' })}
+      </p>
+      <h1>{post.data.title}</h1>
+      <p class="lede">{post.data.description}</p>
+      <div class="mt-2">
+        <ImagePlaceholder label={post.data.heroLabel ?? `JOURNAL — ${post.data.title}`} aspect="landscape" priority />
+      </div>
+      <div class="body">
+        <Content />
+      </div>
+      <nav class="article-nav" aria-label="Article">
+        <div>
+          {
+            prev && (
+              <a href={localizePath(locale, `journal/${prev.data.slug}`)}>
+                {copy.journal.prev}: {prev.data.title}
+              </a>
+            )
+          }
+        </div>
+        <div>
+          {
+            next && (
+              <a href={localizePath(locale, `journal/${next.data.slug}`)}>
+                {copy.journal.next}: {next.data.title}
+              </a>
+            )
+          }
+        </div>
+      </nav>
+      <p class="mt-2">
+        <a class="link-caps" href={pageHref(locale, 'journal')}>{copy.common.backToJournal}</a>
+      </p>
+    </div>
+  </article>
+
+  {
+    related.length > 0 && (
+      <section class="section">
+        <div class="container">
+          <h2 class="eyebrow">{copy.journal.related}</h2>
+          <div class="mt-1">
+            <JournalPreview locale={locale} posts={related} />
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <CtaBand locale={locale} />
+</BaseLayout>

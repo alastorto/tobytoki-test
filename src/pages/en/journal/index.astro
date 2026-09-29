@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import JournalPreview from '../../../components/JournalPreview.astro';
+import { getJournalPosts } from '../../../lib/journal';
+import { t } from '../../../i18n/ui';
+
+const locale = 'en' as const;
+const copy = t(locale);
+const posts = await getJournalPosts(locale);
+---
+
+<BaseLayout
+  locale={locale}
+  title={copy.journal.metaTitle}
+  description={copy.journal.metaDescription}
+  path="journal"
+  current="journal"
+>
+  <section class="page-hero container">
+    <Breadcrumb locale={locale} items={[{ label: copy.journal.h1 }]} />
+    <h1>{copy.journal.h1}</h1>
+    <p class="lede mt-1">{copy.journal.lead}</p>
+  </section>
+  <section class="section-tight">
+    <div class="container">
+      {posts.length ? <JournalPreview locale={locale} posts={posts} /> : <p>{copy.journal.empty}</p>}
+    </div>
+  </section>
+</BaseLayout>

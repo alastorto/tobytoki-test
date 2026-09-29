@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import ImagePlaceholder from '../components/ImagePlaceholder.astro';
+import CtaBand from '../components/CtaBand.astro';
+import type { Locale } from '../data/site';
+import { t } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = t(locale);
+---
+
+<BaseLayout
+  locale={locale}
+  title={copy.about.metaTitle}
+  description={copy.about.metaDescription}
+  path="about"
+  current="about"
+>
+  <section class="page-hero container">
+    <Breadcrumb locale={locale} items={[{ label: copy.about.h1 }]} />
+    <h1>{copy.about.h1}</h1>
+    <p class="lede mt-1">{copy.about.lead}</p>
+  </section>
+
+  <section class="section">
+    <div class="container split">
+      <ImagePlaceholder label="ABOUT — Toby portrait" aspect="portrait" priority />
+      <div class="split-copy">
+        <h2 class="headline-mix">Art & Design</h2>
+        <p>
+          {locale === 'zh'
+            ? 'Art & Design 背景。正式生平與學歷細節稍後提供。'
+            : 'An Art & Design background. Full biography later.'}
+        </p>
+        <h2 class="headline-mix mt-2">{locale === 'zh' ? '畫畫老師' : 'Art teacher'}</h2>
+        <p>
+          {locale === 'zh'
+            ? '曾任畫畫老師，習慣以耐心與引導方式與小朋友相處。'
+            : 'Former art teacher — used to guiding children with patience.'}
+        </p>
+        <h2 class="headline-mix mt-2">{locale === 'zh' ? '創作實踐' : 'Practice'}</h2>
+        <p>
+          {locale === 'zh'
+            ? '主要：面部彩繪、氣球藝術（Balloon Twisting）。次要：攝影。'
+            : 'Lead crafts: face painting and balloon art. Supporting: photography.'}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="media-stack duo">
+        <ImagePlaceholder label="ABOUT — Working with children" aspect="landscape" />
+        <ImagePlaceholder label="ABOUT — Studio / process" aspect="square" />
+      </div>
+      <p class="lede mt-2">
+        {locale === 'zh'
+          ? '這頁會發展成較像 editorial interview 的個人介紹，而不是履歷表。正式文字稍後由 Toby 提供。'
+          : 'This page will grow into an editorial artist profile rather than a CV. Final copy from Toby later.'}
+      </p>
+    </div>
+  </section>
+
+  <CtaBand locale={locale} />
+</BaseLayout>

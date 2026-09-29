@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import ImagePlaceholder from '../components/ImagePlaceholder.astro';
+import { siteConfig, type Locale } from '../data/site';
+import { t } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = t(locale);
+const whatsapp = siteConfig.whatsapp
+  ? `https://wa.me/${siteConfig.whatsapp.replace(/\D/g, '')}`
+  : '';
+---
+
+<BaseLayout
+  locale={locale}
+  title={copy.contact.metaTitle}
+  description={copy.contact.metaDescription}
+  path="contact"
+  current="contact"
+>
+  <section class="page-hero container">
+    <Breadcrumb locale={locale} items={[{ label: copy.contact.h1 }]} />
+    <h1>{copy.contact.h1}</h1>
+    <p class="lede mt-1">{copy.contact.lead}</p>
+  </section>
+
+  <section class="section-tight">
+    <div class="container contact-grid">
+      <div>
+        <ImagePlaceholder label="CONTACT — Toby / event mood" aspect="portrait" />
+        <div class="mt-2 stack-sm">
+          {
+            whatsapp ? (
+              <a class="btn btn-solid" href={whatsapp} target="_blank" rel="noopener noreferrer">
+                {copy.common.whatsappCta}
+              </a>
+            ) : (
+              <p class="btn" aria-disabled="true">{copy.common.comingSoonContact}</p>
+            )
+          }
+          {
+            siteConfig.email ? (
+              <p>
+                <a class="link-caps" href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
+              </p>
+            ) : null
+          }
+        </div>
+      </div>
+
+      <div class="ph-frame form-panel">
+        <form method="post" action="#" onsubmit="return false;">
+          <div class="form-group">
+            <label for="event-type">{copy.contact.eventType}</label>
+            <select id="event-type" name="event-type">
+              <option value="">{locale === 'zh' ? '請選擇' : 'Select'}</option>
+              <option>{copy.nav.facePainting}</option>
+              <option>{copy.nav.balloonArt}</option>
+              <option>{copy.nav.photography}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="event-date">{copy.contact.eventDate}</label>
+            <input id="event-date" name="event-date" type="date" />
+          </div>
+          <div class="form-group">
+            <label for="location">{copy.contact.location}</label>
+            <input id="location" name="location" type="text" />
+          </div>
+          <div class="form-group">
+            <label for="guests">{copy.contact.guests}</label>
+            <input id="guests" name="guests" type="text" />
+          </div>
+          <div class="form-group">
+            <label for="service">{copy.contact.service}</label>
+            <input id="service" name="service" type="text" />
+          </div>
+          <div class="form-group">
+            <label for="message">{copy.contact.message}</label>
+            <textarea id="message" name="message"></textarea>
+          </div>
+          <button class="btn" type="submit" disabled>{locale === 'zh' ? '稍後開放' : 'Coming later'}</button>
+          <p class="form-note">{copy.contact.note}</p>
+        </form>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

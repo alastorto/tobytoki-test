@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import FaqList from '../components/FaqList.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { faqItems } from '../data/faq';
+import type { Locale } from '../data/site';
+import { t } from '../i18n/ui';
+import { absoluteUrl, pageHref } from '../i18n/utils';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = t(locale);
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map((item) => ({
+    '@type': 'Question',
+    name: item.question[locale],
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer[locale],
+    },
+  })),
+  url: absoluteUrl(pageHref(locale, 'faq')),
+};
+---
+
+<BaseLayout
+  locale={locale}
+  title={copy.faq.metaTitle}
+  description={copy.faq.metaDescription}
+  path="faq"
+  current="faq"
+  schemas={[faqSchema]}
+>
+  <section class="page-hero container">
+    <Breadcrumb locale={locale} items={[{ label: copy.faq.h1 }]} />
+    <h1>{copy.faq.h1}</h1>
+    <p class="lede mt-1">{copy.faq.lead}</p>
+  </section>
+  <section class="section-tight">
+    <div class="container">
+      <FaqList locale={locale} grouped />
+    </div>
+  </section>
+  <CtaBand locale={locale} />
+</BaseLayout>

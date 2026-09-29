@@ -1,0 +1,79 @@
+---
+import type { Locale } from '../data/site';
+import { workItems, type WorkCategory } from '../data/work';
+import { t } from '../i18n/ui';
+import ImagePlaceholder from './ImagePlaceholder.astro';
+
+interface Props {
+  locale: Locale;
+  items?: typeof workItems;
+  filterable?: boolean;
+  limit?: number;
+}
+
+const { locale, items = workItems, filterable = false, limit } = Astro.props;
+const copy = t(locale);
+const list = typeof limit === 'number' ? items.slice(0, limit) : items;
+
+const categoryLabel: Record<WorkCategory, string> = {
+  'face-painting': copy.nav.facePainting,
+  'balloon-art': copy.nav.balloonArt,
+  photography: copy.nav.photography,
+};
+---
+
+{
+  filterable && (
+    <div class="filters" data-work-filters>
+      <button type="button" data-filter="all" aria-pressed="true">{copy.work.filterAll}</button>
+      <button type="button" data-filter="face-painting" aria-pressed="false">{copy.work.filterFace}</button>
+      <button type="button" data-filter="balloon-art" aria-pressed="false">{copy.work.filterBalloon}</button>
+      <button type="button" data-filter="photography" aria-pressed="false">{copy.work.filterPhoto}</button>
+    </div>
+  )
+}
+
+<div class="portfolio-grid" data-work-grid>
+  {
+    list.map((item) => (
+      <article
+        class:list={[
+          'work-item',
+          item.size === 'large' && 'item-large',
+          item.size === 'medium' && 'item-medium',
+          item.size === 'small' && 'item-small',
+        ]}
+        data-category={item.category}
+      >
+        <ImagePlaceholder label={item.label} aspect={item.aspect} />
+        <p class="portfolio-meta">
+          {categoryLabel[item.category]} · {item.label}
+        </p>
+      </article>
+    ))
+  }
+</div>
+
+{
+  filterable && (
+    <script>
+      const root = document.querySelector('[data-work-filters]');
+      const grid = document.querySelector('[data-work-grid]');
+      if (root && grid) {
+        root.addEventListener('click', (event) => {
+          const target = event.target;
+          if (!(target instanceof HTMLButtonElement)) return;
+          const filter = target.dataset.filter;
+          if (!filter) return;
+          root.querySelectorAll('button').forEach((btn) => {
+            btn.setAttribute('aria-pressed', btn === target ? 'true' : 'false');
+          });
+          grid.querySelectorAll<HTMLElement>('.work-item').forEach((item) => {
+            const cat = item.dataset.category;
+            item.hidden = filter !== 'all' && cat !== filter;
+          });
+        });
+      }
+    </script>
+  )
+}
