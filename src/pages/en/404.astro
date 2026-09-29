@@ -1,9 +1,9 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { t } from '../i18n/ui';
-import { pageHref } from '../i18n/utils';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { t } from '../../i18n/ui';
+import { pageHref } from '../../i18n/utils';
 
-const locale = 'zh' as const;
+const locale = 'en' as const;
 const copy = t(locale);
 ---
 
@@ -20,7 +20,7 @@ const copy = t(locale);
     <p class="lede" style="margin: 1rem auto;">{copy.notFound.body}</p>
     <a class="link-caps" href={pageHref(locale, 'home')}>{copy.notFound.home}</a>
     <p class="mt-2">
-      <a class="link-caps" href="/en">{t('en').notFound.home} (EN)</a>
+      <a class="link-caps" href="/">{t('zh').notFound.home}（中文）</a>
     </p>
   </section>
 </BaseLayout>

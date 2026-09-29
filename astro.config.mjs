@@ -7,6 +7,9 @@ export default defineConfig({
   trailingSlash: 'never',
   integrations: [
     sitemap({
+      filter(page) {
+        return !page.includes('/404');
+      },
       i18n: {
         defaultLocale: 'zh-HK',
         locales: {
@@ -15,13 +18,22 @@ export default defineConfig({
         },
       },
       serialize(item) {
-        // Map /en/* paths to en-HK; root paths to zh-HK
-        const isEn = item.url.includes('/en/') || item.url.endsWith('/en');
+        const base = 'https://tobytoki.hk';
+        const isEn = item.url === `${base}/en` || item.url.startsWith(`${base}/en/`);
+        const zhUrl = isEn
+          ? item.url === `${base}/en`
+            ? `${base}/`
+            : item.url.replace(`${base}/en/`, `${base}/`)
+          : item.url;
+        const enUrl = isEn
+          ? item.url
+          : item.url === `${base}/`
+            ? `${base}/en`
+            : item.url.replace(base, `${base}/en`);
+
         item.links = [
-          {
-            url: item.url,
-            lang: isEn ? 'en-HK' : 'zh-HK',
-          },
+          { url: zhUrl, lang: 'zh-HK' },
+          { url: enUrl, lang: 'en-HK' },
         ];
         return item;
       },

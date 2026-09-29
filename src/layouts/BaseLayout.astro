@@ -14,6 +14,7 @@ interface Props {
   path?: string;
   current?: string;
   ogType?: 'website' | 'article';
+  noindex?: boolean;
   schemas?: Record<string, unknown> | Record<string, unknown>[];
 }
 
@@ -24,6 +25,7 @@ const {
   path = '',
   current = '',
   ogType = 'website',
+  noindex = false,
   schemas = [],
 } = Astro.props;
 
@@ -64,7 +66,14 @@ const allSchemas = [websiteSchema, personSchema, ...(Array.isArray(schemas) ? sc
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;500;600&family=Public+Sans:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
-    <Seo locale={locale} title={title} description={description} path={path} ogType={ogType} />
+    <Seo
+      locale={locale}
+      title={title}
+      description={description}
+      path={path}
+      ogType={ogType}
+      noindex={noindex}
+    />
     <StructuredData data={allSchemas} />
   </head>
   <body>
