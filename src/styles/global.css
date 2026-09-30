@@ -555,8 +555,7 @@ textarea {
   }
 }
 
-/* Image frame — Ostermoor simple style:
-   outer sharp rect + gap + scoop (concave-corner) inner border + scooped media */
+/* Image frame — double scoop borders (outer + inner both concave at corners) */
 .ph-wrap {
   position: relative;
 }
@@ -578,23 +577,24 @@ textarea {
 }
 
 .ph-frame {
+  --frame-gap: 6px;
+  --scoop-stroke: 1px;
   position: relative;
-  border: 1px solid var(--color-black);
-  padding: 6px;
+  border: none;
+  padding: var(--frame-gap);
   background: var(--color-background);
   overflow: visible;
+  color: var(--color-black);
 }
 
-/* Ostermoor .border--scoop — inner concave-corner stroke */
-.ph-frame::before {
+/* Shared Ostermoor .border--scoop stroke recipe */
+.ph-frame::before,
+.ph-frame::after {
   content: "";
   position: absolute;
-  inset: 6px;
-  z-index: 2;
   pointer-events: none;
-  color: var(--color-black);
   --margin: 0px;
-  --border-width: 1px;
+  --border-width: var(--scoop-stroke);
   --g: #0000 calc(98% - var(--border-width)), #000 calc(100% - var(--border-width)) 98%, #0000;
   --radius: calc(var(--corner-radius) + var(--margin));
   --mask:
@@ -616,6 +616,18 @@ textarea {
   -webkit-mask: var(--mask);
   mask: var(--mask);
   background-color: currentColor;
+}
+
+/* Outer scoop border — follows concave corners too */
+.ph-frame::after {
+  inset: 0;
+  z-index: 1;
+}
+
+/* Inner scoop border */
+.ph-frame::before {
+  inset: var(--frame-gap);
+  z-index: 2;
 }
 
 /* Ostermoor .rounded--scoop — media clipped to concave corners */
@@ -1268,12 +1280,12 @@ textarea {
 
 .form-panel {
   padding: 1.35rem 1.2rem;
+  border: 1px solid var(--color-black);
 }
 
-.form-panel::before {
-  /* Keep scoop ring clear of form fields */
-  inset: 0;
-  opacity: 0;
+.form-panel::before,
+.form-panel::after {
+  display: none;
 }
 
 .form-group {
