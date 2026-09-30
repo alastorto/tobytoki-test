@@ -555,14 +555,10 @@ textarea {
   }
 }
 
-/* Image placeholder — Ostermoor border--fancy-box + rounded--scoop */
+/* Image frame — Ostermoor simple style:
+   outer sharp rect + gap + scoop (concave-corner) inner border + scooped media */
 .ph-wrap {
   position: relative;
-}
-
-.ph-wrap:has(.ph-frame) {
-  /* Room for fancy-box outer hairline (::before at -17px) */
-  margin: 18px 6px;
 }
 
 .ph {
@@ -581,32 +577,48 @@ textarea {
     var(--color-tan);
 }
 
-/* Exact Ostermoor .border--fancy-box */
 .ph-frame {
   position: relative;
-  border: 25px solid;
-  border-image: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27341%27 height=%27402%27 viewBox=%270 0 341 402%27 fill=%27none%27%3E%3Cpath d=%27M341 -1.49056e-05L341 18.9106L323.656 18.9106L323.656 24.3844L341 24.3844L341 377.616L323.656 377.616L323.656 383.089L341 383.089L341 402L322.077 402L322.077 384.668L316.6 384.668L316.6 402L24.4003 402L24.4003 384.668L18.9229 384.668L18.9229 402L2.25507e-05 402L2.17241e-05 383.089L17.3437 383.089L17.3437 377.616L2.14848e-05 377.616L-1.65061e-05 24.3844L17.3437 24.3844L17.3437 18.9106L-1.67454e-05 18.9106L-1.7572e-05 0L18.9229 -8.27146e-07L18.9229 17.3325L24.4003 17.3325L24.4003 -1.06657e-06L316.6 -1.3839e-05L316.6 17.3324L322.077 17.3324L322.077 -1.40784e-05L341 -1.49056e-05ZM339.421 17.3324L339.421 1.57811L323.656 1.57811L323.656 17.3324L339.421 17.3324ZM339.421 376.037L339.421 25.9535L322.077 25.9535L322.077 18.9016L315.02 18.9016L315.02 1.56911L25.9795 1.56912L25.9795 18.9016L18.9229 18.9016L18.9229 25.9536L1.57915 25.9536L1.57919 376.037L18.9229 376.037L18.9229 383.089L25.9795 383.089L25.9795 400.422L315.021 400.422L315.021 383.089L322.077 383.089L322.077 376.037L339.421 376.037ZM339.421 400.422L339.421 384.668L323.656 384.668L323.656 400.422L339.421 400.422ZM17.3437 17.3325L17.3437 1.57812L1.57915 1.57812L1.57915 17.3325L17.3437 17.3325ZM17.3437 400.422L17.3437 384.668L1.57919 384.668L1.57919 400.422L17.3437 400.422Z%27 fill=%27%231A1B1C%27/%3E%3C/svg%3E");
-  border-image-slice: 26;
-  background: transparent;
+  border: 1px solid var(--color-black);
+  padding: 6px;
+  background: var(--color-background);
   overflow: visible;
 }
 
+/* Ostermoor .border--scoop — inner concave-corner stroke */
 .ph-frame::before {
   content: "";
   position: absolute;
-  top: -17px;
-  right: -17px;
-  bottom: -17px;
-  left: -17px;
-  width: calc(100% + 34px);
-  height: calc(100% + 34px);
-  border: 1px solid var(--color-black);
-  box-sizing: border-box;
+  inset: 6px;
+  z-index: 2;
   pointer-events: none;
-  z-index: 1;
+  color: var(--color-black);
+  --margin: 0px;
+  --border-width: 1px;
+  --g: #0000 calc(98% - var(--border-width)), #000 calc(100% - var(--border-width)) 98%, #0000;
+  --radius: calc(var(--corner-radius) + var(--margin));
+  --mask:
+    radial-gradient(var(--radius) at var(--radius) var(--radius), var(--g))
+      calc(var(--radius) * -1) calc(var(--radius) * -1),
+    linear-gradient(
+        90deg,
+        #000 var(--border-width),
+        #0000 0 calc(100% - var(--border-width)),
+        #000 0
+      )
+      50% / 100% calc(100% - (var(--radius) * 2) + var(--border-width)) no-repeat,
+    linear-gradient(
+        #000 var(--border-width),
+        #0000 0 calc(100% - var(--border-width)),
+        #000 0
+      )
+      50% / calc(100% - (var(--radius) * 2) + var(--border-width)) 100% no-repeat;
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+  background-color: currentColor;
 }
 
-/* Exact Ostermoor .rounded--scoop on media */
+/* Ostermoor .rounded--scoop — media clipped to concave corners */
 .ph-inner {
   --g: #0000 98%, #000;
   --r: var(--corner-radius);
@@ -871,14 +883,14 @@ textarea {
 
 .heritage-grid {
   display: grid;
-  gap: 2rem;
+  gap: 1.5rem;
   margin-top: 2.5rem;
   text-align: left;
 }
 
 .service-trio {
   display: grid;
-  gap: 2.5rem;
+  gap: 2rem;
 }
 
 .service-trio article p {
@@ -902,12 +914,12 @@ textarea {
 @media (min-width: 800px) {
   .heritage-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 2.25rem;
+    gap: 1.75rem;
   }
 
   .service-trio {
     grid-template-columns: repeat(3, 1fr);
-    gap: 2.5rem;
+    gap: 2rem;
   }
 }
 
@@ -1255,8 +1267,13 @@ textarea {
 }
 
 .form-panel {
-  padding: 1.5rem 1.35rem;
-  margin: 18px 6px;
+  padding: 1.35rem 1.2rem;
+}
+
+.form-panel::before {
+  /* Keep scoop ring clear of form fields */
+  inset: 0;
+  opacity: 0;
 }
 
 .form-group {
