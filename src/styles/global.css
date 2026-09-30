@@ -323,19 +323,20 @@ textarea {
   pointer-events: none;
 }
 
-/* Header — Ostermoor: giant brand masthead + nav + double rule */
+/* Brand masthead scrolls away; compact nav stays sticky (Ostermoor pattern) */
+.brand-masthead {
+  display: none;
+  padding: 2rem 0 0.5rem;
+  text-align: center;
+  background: var(--color-background);
+}
+
 .site-header {
   position: sticky;
   top: var(--announce-h);
   z-index: 1000;
   background: rgba(251, 252, 244, 0.96);
   backdrop-filter: blur(8px);
-}
-
-.brand-masthead {
-  display: none;
-  padding: 1.75rem 0 0.35rem;
-  text-align: center;
 }
 
 .brand-mast,
@@ -498,11 +499,16 @@ textarea {
   }
 
   .brand-compact {
+    /* Show crest-only compact mark once masthead has scrolled away */
+    opacity: 0.95;
+  }
+
+  .brand-compact .brand-word {
     display: none;
   }
 
   .nav-shell {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr auto 1fr;
   }
 
   .nav-left {
@@ -654,11 +660,11 @@ textarea {
 .hero-carousel {
   position: relative;
   width: 100%;
-  height: min(78svh, 820px);
-  min-height: 420px;
+  height: calc(100svh - var(--announce-h) - 7.5rem);
+  max-height: 900px;
+  min-height: 460px;
   overflow: hidden;
   background: var(--color-tan);
-  border-block: 1px solid rgba(26, 27, 28, 0.2);
 }
 
 .hero-slides,
@@ -1294,9 +1300,12 @@ textarea {
 }
 
 .footer-ruled {
+  border-top: 1px solid rgba(26, 27, 28, 0.35);
+}
+
+.footer-row {
   display: grid;
   grid-template-columns: 1fr;
-  border-top: 1px solid rgba(26, 27, 28, 0.35);
 }
 
 .footer-cell {
@@ -1343,23 +1352,25 @@ textarea {
 
 @media (min-width: 900px) {
   .footer-ruled {
-    grid-template-columns: 1.1fr 1.4fr 1.1fr;
     border-left: 1px solid rgba(26, 27, 28, 0.28);
     border-right: 1px solid rgba(26, 27, 28, 0.28);
     margin-inline: var(--container-gutter);
   }
 
-  .footer-cell {
+  .footer-row {
+    grid-template-columns: 1.1fr 1.4fr 1.1fr;
+  }
+
+  .footer-row .footer-cell {
     border-right: 1px solid rgba(26, 27, 28, 0.28);
   }
 
-  .footer-cell:nth-child(3n) {
+  .footer-row .footer-cell:last-child {
     border-right: none;
   }
 
   .footer-span {
-    grid-column: 1 / -1;
-    border-right: none;
+    grid-column: span 2;
   }
 }
 

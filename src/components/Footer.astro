@@ -14,35 +14,39 @@ const year = new Date().getFullYear();
 
 <footer class="site-footer">
   <div class="footer-ruled">
-    <div class="footer-cell">
-      <h2 class="footer-script">{copy.footer.contactTitle}</h2>
-      <p class="footer-caps">{copy.footer.contactNote}</p>
+    <div class="footer-row">
+      <div class="footer-cell">
+        <h2 class="footer-script">{copy.footer.contactTitle}</h2>
+        <p class="footer-caps">{copy.footer.contactNote}</p>
+      </div>
+      <div class="footer-cell footer-center">
+        <p class="footer-caps">{copy.footer.loveLine}</p>
+        <p class="footer-script lg">{copy.footer.loveAccent}</p>
+      </div>
+      <div class="footer-cell">
+        <h2 class="footer-script">{copy.footer.explore}</h2>
+        <ul class="footer-links">
+          <li><a href={pageHref(locale, 'work')}>{copy.nav.work}</a></li>
+          <li><a href={pageHref(locale, 'about')}>{copy.nav.about}</a></li>
+          <li><a href={pageHref(locale, 'journal')}>{copy.nav.journal}</a></li>
+          <li><a href={pageHref(locale, 'faq')}>{copy.nav.faq}</a></li>
+          <li><a href={pageHref(locale, 'contact')}>{copy.nav.contact}</a></li>
+        </ul>
+      </div>
     </div>
-    <div class="footer-cell footer-center">
-      <p class="footer-caps">{copy.footer.loveLine}</p>
-      <p class="footer-script lg">{copy.footer.loveAccent}</p>
-    </div>
-    <div class="footer-cell">
-      <h2 class="footer-script">{copy.footer.explore}</h2>
-      <ul class="footer-links">
-        <li><a href={pageHref(locale, 'work')}>{copy.nav.work}</a></li>
-        <li><a href={pageHref(locale, 'about')}>{copy.nav.about}</a></li>
-        <li><a href={pageHref(locale, 'journal')}>{copy.nav.journal}</a></li>
-        <li><a href={pageHref(locale, 'faq')}>{copy.nav.faq}</a></li>
-        <li><a href={pageHref(locale, 'contact')}>{copy.nav.contact}</a></li>
-      </ul>
-    </div>
-    <div class="footer-cell">
-      <h2 class="footer-script">{copy.footer.services}</h2>
-      <ul class="footer-links">
-        <li><a href={pageHref(locale, 'face-painting')}>{copy.nav.facePainting}</a></li>
-        <li><a href={pageHref(locale, 'balloon-twisting')}>{copy.nav.balloonArt}</a></li>
-        <li><a href={pageHref(locale, 'photography')}>{copy.nav.photography}</a></li>
-      </ul>
-    </div>
-    <div class="footer-cell footer-span">
-      <h2 class="footer-script">{copy.footer.taglineTitle}</h2>
-      <p>{copy.footer.tagline}</p>
+    <div class="footer-row">
+      <div class="footer-cell">
+        <h2 class="footer-script">{copy.footer.services}</h2>
+        <ul class="footer-links">
+          <li><a href={pageHref(locale, 'face-painting')}>{copy.nav.facePainting}</a></li>
+          <li><a href={pageHref(locale, 'balloon-twisting')}>{copy.nav.balloonArt}</a></li>
+          <li><a href={pageHref(locale, 'photography')}>{copy.nav.photography}</a></li>
+        </ul>
+      </div>
+      <div class="footer-cell footer-span">
+        <h2 class="footer-script">{copy.footer.taglineTitle}</h2>
+        <p>{copy.footer.tagline}</p>
+      </div>
     </div>
   </div>
   <div class="footer-wordmark"><span>Tobytoki</span></div>
