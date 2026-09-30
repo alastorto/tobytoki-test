@@ -1,6 +1,7 @@
 ---
 import Seo from '../components/Seo.astro';
 import StructuredData from '../components/StructuredData.astro';
+import AnnouncementBar from '../components/AnnouncementBar.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { localeToHtmlLang, siteConfig, type Locale } from '../data/site';
@@ -78,6 +79,7 @@ const allSchemas = [websiteSchema, personSchema, ...(Array.isArray(schemas) ? sc
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
+    <AnnouncementBar locale={locale} />
     <Header locale={locale} current={current} />
     <main id="main">
       <slot />

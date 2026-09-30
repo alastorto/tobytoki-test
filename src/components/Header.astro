@@ -15,9 +15,16 @@ const home = pageHref(locale, 'home');
 ---
 
 <header class="site-header">
+  <div class="brand-masthead">
+    <a class="brand-mast" href={home} aria-label="Tobytoki">
+      <span class="brand-crest" aria-hidden="true">t</span>
+      <span class="brand-word">Tobytoki</span>
+    </a>
+  </div>
+
   <div class="container nav-shell">
     <div class="nav-left">
-      <ul class="nav-list">
+      <ul class="nav-list desktop-only">
         <li>
           <a href={pageHref(locale, 'work')} aria-current={current === 'work' ? 'page' : undefined}
             >{copy.nav.work}</a
@@ -50,10 +57,27 @@ const home = pageHref(locale, 'home');
             >{copy.nav.about}</a
           >
         </li>
+        <li>
+          <a href={pageHref(locale, 'faq')} aria-current={current === 'faq' ? 'page' : undefined}
+            >{copy.nav.faq}</a
+          >
+        </li>
       </ul>
+      <button
+        class="nav-toggle"
+        type="button"
+        data-nav-toggle
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        aria-label={copy.nav.openMenu}
+      >
+        <span></span>
+        <span></span>
+      </button>
     </div>
 
-    <a class="brand" href={home} aria-label="Tobytoki">
+    <a class="brand-compact" href={home} aria-label="Tobytoki">
+      <span class="brand-crest" aria-hidden="true">t</span>
       <span class="brand-word">Tobytoki</span>
     </a>
 
@@ -75,23 +99,15 @@ const home = pageHref(locale, 'home');
       <div class="desktop-only">
         <LanguageSwitcher locale={locale} />
       </div>
-      <button
-        class="nav-toggle"
-        type="button"
-        data-nav-toggle
-        aria-expanded="false"
-        aria-controls="mobile-nav"
-      >
-        {copy.nav.openMenu}
-      </button>
+      <a class="nav-mobile-contact" href={pageHref(locale, 'contact')}>{copy.nav.contact}</a>
     </div>
   </div>
 
+  <div class="header-rule" aria-hidden="true"></div>
+
   <div class="container mobile-panel" id="mobile-nav" data-mobile-panel hidden>
     <ul class="nav-list">
-      <li>
-        <a href={pageHref(locale, 'work')}>{copy.nav.work}</a>
-      </li>
+      <li><a href={pageHref(locale, 'work')}>{copy.nav.work}</a></li>
       <li>
         <details class="services-details" open>
           <summary>{copy.nav.services}</summary>

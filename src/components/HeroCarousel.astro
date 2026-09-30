@@ -1,0 +1,82 @@
+---
+interface Props {
+  slides: { label: string; tone: 'a' | 'b' | 'c' | 'd' | 'e' }[];
+  label: string;
+}
+
+const { slides, label } = Astro.props;
+---
+
+<section class="hero-carousel" data-hero-carousel aria-roledescription="carousel" aria-label={label}>
+  <div class="hero-slides">
+    {
+      slides.map((slide, i) => (
+        <div class:list={['hero-slide', i === 0 && 'is-active']} data-slide>
+          <div class:list={['hero-swatch', `tone-${slide.tone}`]} role="img" aria-label={slide.label} />
+        </div>
+      ))
+    }
+  </div>
+  <button class="carousel-nav prev" type="button" data-hero-prev aria-label="Previous">‹</button>
+  <button class="carousel-nav next" type="button" data-hero-next aria-label="Next">›</button>
+  <div class="carousel-dots" role="tablist" data-hero-dots></div>
+</section>
+
+<script>
+  const root = document.querySelector('[data-hero-carousel]');
+  if (root instanceof HTMLElement) {
+    const slides = [...root.querySelectorAll('[data-slide]')];
+    const dotsWrap = root.querySelector('[data-hero-dots]');
+    const prev = root.querySelector('[data-hero-prev]');
+    const next = root.querySelector('[data-hero-next]');
+    let index = 0;
+    let timer: ReturnType<typeof setInterval> | undefined;
+
+    const paint = () => {
+      slides.forEach((el, i) => el.classList.toggle('is-active', i === index));
+      if (dotsWrap) {
+        [...dotsWrap.querySelectorAll('button')].forEach((btn, i) => {
+          btn.classList.toggle('is-active', i === index);
+          btn.setAttribute('aria-selected', i === index ? 'true' : 'false');
+        });
+      }
+    };
+
+    const go = (n: number) => {
+      index = (n + slides.length) % slides.length;
+      paint();
+    };
+
+    if (dotsWrap) {
+      slides.forEach((_, i) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.setAttribute('role', 'tab');
+        btn.setAttribute('aria-label', `Slide ${i + 1}`);
+        btn.addEventListener('click', () => {
+          go(i);
+          restart();
+        });
+        dotsWrap.appendChild(btn);
+      });
+    }
+
+    prev?.addEventListener('click', () => {
+      go(index - 1);
+      restart();
+    });
+    next?.addEventListener('click', () => {
+      go(index + 1);
+      restart();
+    });
+
+    const restart = () => {
+      if (timer) clearInterval(timer);
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      timer = setInterval(() => go(index + 1), 5500);
+    };
+
+    paint();
+    restart();
+  }
+</script>

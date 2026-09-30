@@ -1,0 +1,57 @@
+---
+import ImagePlaceholder from './ImagePlaceholder.astro';
+
+interface Item {
+  title: string;
+  caption: string;
+  label: string;
+}
+
+interface Props {
+  title: string;
+  accent: string;
+  lead?: string;
+  items: Item[];
+}
+
+const { title, accent, lead, items } = Astro.props;
+---
+
+<section class="strip-section" aria-label={title}>
+  <div class="strip-head">
+    <div>
+      <h2 class="headline-mix headline-md" style="text-align: left;">
+        {title}
+        {' '}
+        <span class="accent">{accent}</span>
+      </h2>
+      {lead && <p class="strip-lead">{lead}</p>}
+    </div>
+    <div class="strip-controls">
+      <button type="button" data-strip-prev aria-label="Previous">‹</button>
+      <button type="button" data-strip-next aria-label="Next">›</button>
+    </div>
+  </div>
+  <div class="strip-track" data-strip>
+    {
+      items.map((item) => (
+        <article class="strip-card">
+          <ImagePlaceholder label={item.label} aspect="square" />
+          <h3>{item.title}</h3>
+          <p>{item.caption}</p>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  const track = document.querySelector('[data-strip]');
+  const prev = document.querySelector('[data-strip-prev]');
+  const next = document.querySelector('[data-strip-next]');
+  if (track instanceof HTMLElement) {
+    const step = () => Math.min(track.clientWidth * 0.8, 320);
+    prev?.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next?.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+  }
+</script>

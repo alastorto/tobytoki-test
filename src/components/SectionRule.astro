@@ -1,0 +1,8 @@
+---
+interface Props {
+  ornament?: boolean;
+}
+const { ornament = true } = Astro.props;
+---
+
+<div class:list={['section-rule', ornament && 'has-ornament']} aria-hidden="true"></div>
