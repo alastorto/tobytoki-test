@@ -1,7 +1,8 @@
 ---
 interface Props {
   label: string;
-  aspect?: 'hero' | 'portrait' | 'landscape' | 'square' | 'tall' | 'wide-hero';
+  /** Kept for call-site compatibility; all images render 2:3 (w:h). */
+  aspect?: string;
   framed?: boolean;
   priority?: boolean;
   class?: string;
@@ -9,7 +10,6 @@ interface Props {
 
 const {
   label,
-  aspect = 'portrait',
   framed = true,
   priority = false,
   class: className = '',
@@ -22,7 +22,7 @@ const loading = priority ? 'eager' : 'lazy';
   class:list={['ph-wrap', className]}
   data-priority={priority ? 'true' : 'false'}
 >
-  <div class:list={['ph', framed && 'ph-frame']} data-aspect={aspect}>
+  <div class:list={['ph', framed && 'ph-frame']} data-aspect="2x3">
     <div class="ph-inner" role="img" aria-label={label} data-loading={loading}>
       <span class="ph-label">{label}</span>
     </div>

@@ -669,28 +669,10 @@ textarea {
   text-shadow: 0 1px 0 rgba(251, 252, 244, 0.35);
 }
 
-.ph[data-aspect='hero'] {
-  aspect-ratio: 16 / 10;
-}
-
-.ph[data-aspect='portrait'] {
-  aspect-ratio: 3 / 4;
-}
-
-.ph[data-aspect='landscape'] {
-  aspect-ratio: 16 / 10;
-}
-
-.ph[data-aspect='square'] {
-  aspect-ratio: 1;
-}
-
-.ph[data-aspect='tall'] {
-  aspect-ratio: 3 / 5;
-}
-
-.ph[data-aspect='wide-hero'] {
-  aspect-ratio: 21 / 9;
+/* All site images: 橫 2 × 直 3 */
+.ph,
+.ph[data-aspect] {
+  aspect-ratio: 2 / 3;
 }
 
 .frame-caption {
@@ -701,20 +683,12 @@ textarea {
   text-align: left;
 }
 
-@media (max-width: 700px) {
-  .ph[data-aspect='hero'],
-  .ph[data-aspect='wide-hero'] {
-    aspect-ratio: 4 / 5;
-  }
-}
-
-/* Full-bleed hero carousel */
+/* Hero carousel — same 2:3 image ratio as the rest of the site */
 .hero-carousel {
   position: relative;
-  width: 100%;
-  height: calc(100svh - var(--announce-h) - 7.5rem);
-  max-height: 900px;
-  min-height: 460px;
+  width: min(100%, calc(min(88svh, 920px) * 2 / 3));
+  aspect-ratio: 2 / 3;
+  margin-inline: auto;
   overflow: hidden;
   background: var(--color-tan);
 }
