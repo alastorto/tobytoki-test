@@ -555,27 +555,58 @@ textarea {
   }
 }
 
-/* Image placeholder */
+/* Image placeholder — Ostermoor border--fancy-box + rounded--scoop */
+.ph-wrap {
+  position: relative;
+}
+
+.ph-wrap:has(.ph-frame) {
+  /* Room for fancy-box outer hairline (::before at -17px) */
+  margin: 18px 6px;
+}
+
 .ph {
   position: relative;
   display: grid;
   place-items: center;
   width: 100%;
+  color: var(--color-crimson);
+  text-align: center;
+}
+
+.ph:not(.ph-frame) {
+  overflow: hidden;
   background:
     linear-gradient(135deg, rgba(226, 215, 195, 0.55), rgba(175, 192, 172, 0.35)),
     var(--color-tan);
-  color: var(--color-crimson);
-  text-align: center;
-  overflow: hidden;
 }
 
+/* Exact Ostermoor .border--fancy-box */
 .ph-frame {
-  border: 18px solid;
-  border-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='341' height='402' viewBox='0 0 341 402' fill='none'%3E%3Cpath d='M341 0V18.91H323.656V24.384H341V377.616H323.656V383.089H341V402H322.077V384.668H316.6V402H24.4V384.668H18.923V402H0V383.089H17.344V377.616H0V24.384H17.344V18.91H0V0H18.923V17.332H24.4V0H316.6V17.332H322.077V0H341ZM339.421 17.332V1.578H323.656V17.332H339.421ZM339.421 376.037V25.953H322.077V18.902H315.02V1.569H25.98V18.902H18.923V25.954H1.579V376.037H18.923V383.089H25.98V400.422H315.021V383.089H322.077V376.037H339.421ZM339.421 400.422V384.668H323.656V400.422H339.421ZM17.344 17.332V1.578H1.579V17.332H17.344ZM17.344 400.422V384.668H1.579V400.422H17.344Z' fill='%231A1B1C'/%3E%3C/svg%3E");
+  position: relative;
+  border: 25px solid;
+  border-image: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27341%27 height=%27402%27 viewBox=%270 0 341 402%27 fill=%27none%27%3E%3Cpath d=%27M341 -1.49056e-05L341 18.9106L323.656 18.9106L323.656 24.3844L341 24.3844L341 377.616L323.656 377.616L323.656 383.089L341 383.089L341 402L322.077 402L322.077 384.668L316.6 384.668L316.6 402L24.4003 402L24.4003 384.668L18.9229 384.668L18.9229 402L2.25507e-05 402L2.17241e-05 383.089L17.3437 383.089L17.3437 377.616L2.14848e-05 377.616L-1.65061e-05 24.3844L17.3437 24.3844L17.3437 18.9106L-1.67454e-05 18.9106L-1.7572e-05 0L18.9229 -8.27146e-07L18.9229 17.3325L24.4003 17.3325L24.4003 -1.06657e-06L316.6 -1.3839e-05L316.6 17.3324L322.077 17.3324L322.077 -1.40784e-05L341 -1.49056e-05ZM339.421 17.3324L339.421 1.57811L323.656 1.57811L323.656 17.3324L339.421 17.3324ZM339.421 376.037L339.421 25.9535L322.077 25.9535L322.077 18.9016L315.02 18.9016L315.02 1.56911L25.9795 1.56912L25.9795 18.9016L18.9229 18.9016L18.9229 25.9536L1.57915 25.9536L1.57919 376.037L18.9229 376.037L18.9229 383.089L25.9795 383.089L25.9795 400.422L315.021 400.422L315.021 383.089L322.077 383.089L322.077 376.037L339.421 376.037ZM339.421 400.422L339.421 384.668L323.656 384.668L323.656 400.422L339.421 400.422ZM17.3437 17.3325L17.3437 1.57812L1.57915 1.57812L1.57915 17.3325L17.3437 17.3325ZM17.3437 400.422L17.3437 384.668L1.57919 384.668L1.57919 400.422L17.3437 400.422Z%27 fill=%27%231A1B1C%27/%3E%3C/svg%3E");
   border-image-slice: 26;
   background: transparent;
+  overflow: visible;
 }
 
+.ph-frame::before {
+  content: "";
+  position: absolute;
+  top: -17px;
+  right: -17px;
+  bottom: -17px;
+  left: -17px;
+  width: calc(100% + 34px);
+  height: calc(100% + 34px);
+  border: 1px solid var(--color-black);
+  box-sizing: border-box;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Exact Ostermoor .rounded--scoop on media */
 .ph-inner {
   --g: #0000 98%, #000;
   --r: var(--corner-radius);
@@ -583,6 +614,7 @@ textarea {
   height: 100%;
   display: grid;
   place-items: center;
+  overflow: hidden;
   -webkit-mask:
     radial-gradient(var(--r) at 0 0, var(--g)) 0 0,
     radial-gradient(var(--r) at 100% 0, var(--g)) 100% 0,
@@ -818,8 +850,9 @@ textarea {
 }
 
 .strip-card {
-  flex: 0 0 min(72vw, 280px);
+  flex: 0 0 min(72vw, 300px);
   scroll-snap-align: start;
+  padding-top: 4px;
 }
 
 .strip-card h3 {
@@ -838,14 +871,14 @@ textarea {
 
 .heritage-grid {
   display: grid;
-  gap: 1.25rem;
+  gap: 2rem;
   margin-top: 2.5rem;
   text-align: left;
 }
 
 .service-trio {
   display: grid;
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
 .service-trio article p {
@@ -869,12 +902,12 @@ textarea {
 @media (min-width: 800px) {
   .heritage-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: 2.25rem;
   }
 
   .service-trio {
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.75rem;
+    gap: 2.5rem;
   }
 }
 
@@ -1222,7 +1255,8 @@ textarea {
 }
 
 .form-panel {
-  padding: 1.25rem;
+  padding: 1.5rem 1.35rem;
+  margin: 18px 6px;
 }
 
 .form-group {
