@@ -5,6 +5,12 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://tobytoki.hk',
   trailingSlash: 'never',
+  // Allow temporary preview tunnels (e.g. trycloudflare) without blocking Host.
+  vite: {
+    preview: {
+      allowedHosts: true,
+    },
+  },
   integrations: [
     sitemap({
       filter(page) {
